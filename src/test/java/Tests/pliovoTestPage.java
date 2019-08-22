@@ -17,7 +17,7 @@ public class pliovoTestPage {
     @BeforeClass
     public void setUp(){
         System.out.println("Inside Set Up Method");
-        driver = setup.driverSetUp(TestConstants.applicationURL,TestConstants.FF_BROWSER);
+        driver = setup.driverSetUp(TestConstants.applicationURL,TestConstants.FCHROME_BROWSER);
 
     }
     @AfterMethod
@@ -36,9 +36,11 @@ public class pliovoTestPage {
         testPage.createNewPageName();
         testPage.clickMessageingModule();
         testPage.dragSMSModule();
-       // testPage.connectModule();
         testPage.fillDetails();
         testPage.dragEmailModule();
         testPage.dragBasic();
+        testPage.connectStartToSMS();
+        testPage.connectSMStoEmail();
+        testPage.connectSMStoExit();
     }
 }

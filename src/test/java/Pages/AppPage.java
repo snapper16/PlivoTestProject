@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class AppPage {
     WebDriver driver;
@@ -54,6 +55,26 @@ public class AppPage {
 
     @FindBy(how = How.XPATH,using="//*[@id='accordion']/div[4]/ul/li[2]")
     private  WebElement sendEmailButton;
+
+    @FindBy(how = How.XPATH,using = "//*[text()='Start']//ancestor::div[contains (@id, \"module-1\")]//div[contains (@class, 'draggable')]")
+    private WebElement connectorFromStart;
+
+    @FindBy(how = How.XPATH,using = "//div[text()='Send an SMS']//ancestor::div[contains (@id,\"module\")]//div[contains (@class, 'droppable')]")
+    private WebElement connectorToSMS;
+
+    @FindBy(how = How.XPATH,using = "//*[text()='Send an SMS']//ancestor::div[contains (@id, \"module\")]//div[contains (@class, 'draggable') and contains(@class,'syn-node-attached-e')]")
+    private WebElement connectorFromSMSToEmail;
+
+    @FindBy(how = How.XPATH,using = "//div[text()='Send an SMS']//ancestor::div[contains (@id,\"module\")]//div[contains (@class, 'draggable') and contains(@class,'syn-node-attached-w')]")
+    private WebElement connectorFromSMSToExit;
+
+
+    @FindBy(how = How.XPATH,using = "//div[text()='Send an Email']//ancestor::div[contains (@id,\"module\")]//div[contains (@class, 'droppable')]")
+    private WebElement connectorToEmail;
+
+
+    @FindBy(how = How.XPATH,using = "//div[text()='Exit App']//ancestor::div[contains (@id,\"module-4\")]//div[contains (@class, 'droppable')]")
+    private WebElement connectorToExit;
 
     @FindBy(how = How.NAME,using="smtp_url")
     private  WebElement emailHost;
@@ -121,23 +142,28 @@ public class AppPage {
 
     }
 
-    public void connectModule() throws InterruptedException {
-        Actions a = new Actions(driver);
-        Thread.sleep(2000);
-      /*  Point point1 = connectorStartPoint.getLocation();
-        int xcord1 = point1.getX();
-        int ycord1 = point1.getY();
-        Point point2 = connectorEndPoint.getLocation();
-        int xcord2 = point2.getX();
-        int ycord2 = point2.getY();
-        a.dragAndDropBy(connectorStartPoint,xcord2,ycord2).build().perform();*/
+    public void connectStartToSMS() throws InterruptedException {
+        TimeUnit.SECONDS.sleep(3);
+        Actions actions = new Actions(driver);
+        actions.clickAndHold(connectorFromStart).moveToElement(connectorToSMS).release().build().perform();
+        TimeUnit.SECONDS.sleep(1);
 
-      a.clickAndHold(connectorStartPoint).pause(2000).moveToElement(connectorEndPoint).release().build().perform();
+    }
 
-       /* a.moveToElement(connectorStartPoint).clickAndHold();
-        a.moveToElement(connectorEndPoint);
-        a.release().build().perform();*/
-      //  a.dragAndDrop(connectorStartPoint,connectorEndPoint).build().perform();
+    public void connectSMStoEmail() throws InterruptedException {
+        TimeUnit.SECONDS.sleep(3);
+        Actions actions = new Actions(driver);
+        actions.clickAndHold(connectorFromSMSToEmail).moveToElement(connectorToEmail).release().build().perform();
+        TimeUnit.SECONDS.sleep(1);
+
+    }
+
+
+    public void connectSMStoExit() throws InterruptedException {
+        TimeUnit.SECONDS.sleep(3);
+        Actions actions = new Actions(driver);
+        actions.clickAndHold(connectorFromSMSToExit).moveToElement(connectorToExit).release().build().perform();
+        TimeUnit.SECONDS.sleep(1);
 
     }
 
@@ -159,10 +185,10 @@ public class AppPage {
         emailUseName.sendKeys("abc@gmail.com");
         emailPassword.sendKeys("12345");
         emailFrom.sendKeys("abc@gmail.com");
-        emailTo.sendKeys("ew");
-        emailSubject.sendKeys("ew");
-        emailCC.sendKeys("ew");
-        emailMes.sendKeys("ew");
+        emailTo.sendKeys("test@gmail.com");
+        emailSubject.sendKeys("plivotest");
+        emailCC.sendKeys("test1@gmail.com");
+        emailMes.sendKeys("test");
 
     }
 
